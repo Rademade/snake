@@ -1,0 +1,16 @@
+.game-table {
+
+}
+
+.game-table .cell {
+  background: black;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  color: white;
+  border: 1px solid white;
+}
+
+.game-table .snake {
+  background: green;
+}

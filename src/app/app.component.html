@@ -1,5 +1,6 @@
 <div class="game-table">
-  <div *ngFor="cell in cells">
-    I'm cell
+  <div *ngFor="let row of board.cells">
+    <div class="cell" [ngClass]="{'snake': cell.isSnake()}"  *ngFor="let cell of row">
+    </div>
   </div>
 </div>

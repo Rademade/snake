@@ -1,10 +1,15 @@
-enum CellType {
+export enum CellType {
   Snake,
   Food,
   Blank
 }
 
-class Cell {
+export interface Coordinates {
+  x: number;
+  y: number;
+}
+
+export class Cell implements Coordinates {
   x: number;
   y: number;
   type: CellType = CellType.Blank;
@@ -14,15 +19,22 @@ class Cell {
     this.y = y;
   }
 
-  setFood() {
+  setFood(): Cell {
     this.type = CellType.Food;
+    return this;
   }
 
-  setSnake() {
+  setSnake(): Cell {
     this.type = CellType.Snake;
+    return this;
   }
 
-  setBlank() {
+  setBlank(): Cell {
     this.type = CellType.Blank;
+    return this;
+  }
+
+  isSnake(): boolean {
+    return this.type === CellType.Snake;
   }
 }

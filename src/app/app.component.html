@@ -1,4 +1,5 @@
 <div class="game-table">
+  <h1>Press space to start</h1>
   <div *ngFor="let row of board.cells">
     <div class="cell" [ngClass]="{'snake': cell.isSnake()}"  *ngFor="let cell of row">
     </div>

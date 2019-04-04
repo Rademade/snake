@@ -32,6 +32,14 @@ export default class Game {
     this.game$.unsubscribe();
   }
 
+  public isStarted() {
+    if (!this.game$ || this.game$.closed) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   private keypressSub() {
     fromEvent(document, 'keydown')
       .pipe(filter((event: KeyboardEvent) => this.isArrowKeyPressed(event.key) ))
@@ -39,6 +47,7 @@ export default class Game {
         this.snake.changeDirection(this.getDirection(event.key));
       });
   }
+
   private initSnake() {
     const snakeHeadX = Math.round(this.board.width / 2);
     const snakeHeadY = Math.round(this.board.height / 2);

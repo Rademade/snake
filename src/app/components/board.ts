@@ -13,7 +13,23 @@ export default class Board {
   }
 
   public getCell(coordinates: Coordinates): Cell {
-    return this.cells[coordinates.y][coordinates.x];
+    const x = this.coordinatesCorrection(coordinates.x, this.height);
+    const y = this.coordinatesCorrection(coordinates.y, this.width);
+    return this.cells[y][x];
+  }
+
+  public clearBoard(): void {
+    this.cells = this.initCells();
+  }
+
+  private coordinatesCorrection(x: number, max: number) {
+    if (x < 0) {
+      return max;
+    } else if (x > max - 1) {
+      return 0;
+    } else {
+      return  x;
+    }
   }
   // ES6
   // Array.from({length: 10}, (row, rowId) => {

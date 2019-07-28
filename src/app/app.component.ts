@@ -19,8 +19,8 @@ export class AppComponent implements OnInit {
 
   constructor() {
     const gameOptions = {
-      width: 10,
-      height: 10
+      width: 20,
+      height: 20
     } as GameOptions;
 
     this.game = new Game(gameOptions);
@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.subscribeToSpacePressed();
+    this.subscribeToSpaceGameOver();
   }
 
   private subscribeToSpacePressed() {
@@ -37,5 +38,9 @@ export class AppComponent implements OnInit {
       .subscribe((event: KeyboardEvent) => {
         this.game.isStarted() ? this.game.stop() : this.game.start();
       });
+  }
+
+  private subscribeToSpaceGameOver() {
+
   }
 }

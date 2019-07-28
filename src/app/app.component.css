@@ -1,16 +1,19 @@
-.game-table {
-
+.board {
+  font-size: 0;
 }
 
-.game-table .cell {
+.board .cell {
   background: black;
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
   display: inline-block;
   color: white;
-  border: 1px solid white;
 }
 
-.game-table .snake {
+.board .snake {
   background: green;
+}
+
+.board .food {
+  background: red;
 }

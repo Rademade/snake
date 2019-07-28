@@ -37,4 +37,16 @@ export class Cell implements Coordinates {
   isSnake(): boolean {
     return this.type === CellType.Snake;
   }
+
+  isFood(): boolean {
+    return this.type === CellType.Food;
+  }
+
+  isBlank(): boolean {
+    return this.type === CellType.Blank;
+  }
+
+  isOutsideOfBoard(): boolean {
+    return this.x < 0 || this.y < 0;
+  }
 }

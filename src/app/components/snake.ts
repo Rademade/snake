@@ -29,6 +29,14 @@ export default class Snake {
     this.head = cell.setSnake();
   }
 
+  public eat(cell: Cell) {
+    this.body = [
+      ...this.body,
+      this.head.setSnake()
+    ];
+    this.head = cell.setSnake();
+  }
+
   public changeDirection(direction: Direction) {
     this.direction = direction;
   }
@@ -56,9 +64,5 @@ export default class Snake {
           y: this.head.y
         };
     }
-  }
-
-  private eat(food: Cell) {
-      // TODO: =)
   }
 }

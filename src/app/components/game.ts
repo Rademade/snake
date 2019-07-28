@@ -1,7 +1,8 @@
 import Snake, { Direction } from './snake';
 import Board from './board';
+import { FoodGenerator } from './food-generator';
 import { Cell } from './cell';
-import { interval, Subscription, fromEvent, Observable } from 'rxjs';
+import { interval, Subscription, fromEvent, Observable, Subject, VirtualTimeScheduler } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 export interface GameOptions {
@@ -11,33 +12,69 @@ export interface GameOptions {
 export default class Game {
   snake: Snake;
   board: Board;
+  points = 0;
+  foodCell: Cell;
   gameOptions: GameOptions;
-  game$: Subscription;
+  snakeMovement$: Subscription;
+  foodGeneration$: Subscription;
+  foodGenerator: FoodGenerator;
 
   constructor(gameOptions: GameOptions) {
     this.gameOptions = gameOptions;
     this.board = new Board(gameOptions.width, gameOptions.height);
     this.snake = this.initSnake();
+    this.foodGenerator = new FoodGenerator();
     this.keypressSub();
   }
 
   public start() {
-    this.game$ = interval(500).subscribe(() => {
-      const nextCell = this.board.getCell(this.snake.nextCellCoordinates());
-      this.snake.move(nextCell);
+    this.snakeMovement$ = this.startMovement(250);
+
+    this.foodGeneration$ = interval(5000).subscribe(() => {
+      if (this.foodCell && this.foodCell.isFood()) {
+        this.foodCell.setBlank();
+      }
+      this.foodCell = this.foodGenerator.place(this.board);
     });
   }
 
   public stop() {
-    this.game$.unsubscribe();
+    this.snakeMovement$.unsubscribe();
+    this.foodGeneration$.unsubscribe();
+  }
+
+  public gameOver() {
+    this.stop();
+    if (confirm('Game over. Start again?')) {
+      console.log(this.board);
+      this.board.clearBoard();
+      this.points = 0;
+      this.snake = this.initSnake();
+    }
   }
 
   public isStarted() {
-    if (!this.game$ || this.game$.closed) {
+    if (!this.snakeMovement$ || this.snakeMovement$.closed) {
       return false;
     } else {
       return true;
     }
+  }
+
+  private startMovement(speed: number = 250): Subscription {
+    return interval(speed).subscribe(() => {
+      const nextCell = this.board.getCell(this.snake.nextCellCoordinates());
+      if (!nextCell || nextCell.isSnake()) {
+        this.gameOver();
+      } else if (nextCell.isFood()) {
+        this.snake.eat(nextCell);
+        this.points += 1;
+        this.snakeMovement$.unsubscribe();
+        this.snakeMovement$ = this.startMovement(250 - this.points * 10);
+      } else {
+        this.snake.move(nextCell);
+      }
+    });
   }
 
   private keypressSub() {

@@ -23,9 +23,10 @@ export default class Board {
   }
 
   private coordinatesCorrection(x: number, max: number) {
+    const maxCoordinate = max - 1;
     if (x < 0) {
-      return max;
-    } else if (x > max - 1) {
+      return maxCoordinate;
+    } else if (x > maxCoordinate) {
       return 0;
     } else {
       return  x;

@@ -29,7 +29,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.subscribeToSpacePressed();
-    this.subscribeToSpaceGameOver();
   }
 
   private subscribeToSpacePressed() {
@@ -38,9 +37,5 @@ export class AppComponent implements OnInit {
       .subscribe((event: KeyboardEvent) => {
         this.game.isStarted() ? this.game.stop() : this.game.start();
       });
-  }
-
-  private subscribeToSpaceGameOver() {
-
   }
 }

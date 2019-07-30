@@ -28,14 +28,8 @@ export default class Game {
   }
 
   public start() {
-    this.snakeMovement$ = this.startMovement(250);
-
-    this.foodGeneration$ = interval(5000).subscribe(() => {
-      if (this.foodCell && this.foodCell.isFood()) {
-        this.foodCell.setBlank();
-      }
-      this.foodCell = this.foodGenerator.place(this.board);
-    });
+    this.snakeMovement$ = this.startSnakeMovement();
+    this.foodGeneration$ = this.startFoodGeneration();
   }
 
   public stop() {
@@ -61,7 +55,7 @@ export default class Game {
     }
   }
 
-  private startMovement(speed: number = 250): Subscription {
+  private startSnakeMovement(speed: number = 250): Subscription {
     return interval(speed).subscribe(() => {
       const nextCell = this.board.getCell(this.snake.nextCellCoordinates());
       if (!nextCell || nextCell.isSnake()) {
@@ -70,10 +64,19 @@ export default class Game {
         this.snake.eat(nextCell);
         this.points += 1;
         this.snakeMovement$.unsubscribe();
-        this.snakeMovement$ = this.startMovement(250 - this.points * 10);
+        this.snakeMovement$ = this.startSnakeMovement(250 - this.points * 10);
       } else {
         this.snake.move(nextCell);
       }
+    });
+  }
+
+  private startFoodGeneration(): Subscription {
+    return interval(5000).subscribe(() => {
+      if (this.foodCell && this.foodCell.isFood()) {
+        this.foodCell.setBlank();
+      }
+      this.foodCell = this.foodGenerator.place(this.board);
     });
   }
 

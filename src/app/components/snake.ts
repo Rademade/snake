@@ -38,6 +38,13 @@ export default class Snake {
   }
 
   public changeDirection(direction: Direction) {
+    const ignoreDirectionChange =
+      (this.direction === Direction.Up && direction === Direction.Down) ||
+      (this.direction === Direction.Down && direction === Direction.Up) ||
+      (this.direction === Direction.Left && direction === Direction.Right) ||
+      (this.direction === Direction.Right && direction === Direction.Left);
+
+    if (ignoreDirectionChange) { return; }
     this.direction = direction;
   }
 

@@ -5,6 +5,8 @@ import Game, { GameOptions } from './components/game';
 import { HostListener } from '@angular/compiler/src/core';
 import { Observable, fromEvent } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Player } from './player';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +18,9 @@ export class AppComponent implements OnInit {
   board: Board;
   snake: Snake;
   game: Game;
+  players$: Observable<any>;
 
-  constructor() {
+  constructor(private db: AngularFirestore) {
     const gameOptions = {
       width: 20,
       height: 20
@@ -28,6 +31,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.players$ = this.db.collection<Player>('players').valueChanges();
+    this.players$.subscribe((data) => {
+      console.log(data);
+    });
     this.subscribeToSpacePressed();
   }
 

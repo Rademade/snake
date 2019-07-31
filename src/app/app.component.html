@@ -1,24 +1,10 @@
-<div class="game-table">
-  <h1 *ngIf="!game.isStarted()">Press space to start</h1>
-  <div *ngIf="game.isStarted()">
-    <h2>Press space to stop</h2>
-    <span>Points: {{ game.points }}</span>
-  </div>
-
-  <div class="board">
-    <div *ngFor="let row of board.cells">
-      <div class="cell" [ngClass]="{'snake': cell.isSnake(), 'food': cell.isFood() }"  *ngFor="let cell of row">
-      </div>
-    </div>
-  </div>
-
-  <div class="players">
-    <ul>
-      <li *ngFor="let player of players$ | async">
-        <span>{{player.name}}</span>
-        <span>{{player.score}}</span>
-        <span>{{player.timeSpended}}</span>
-      </li>
-    </ul>
-  </div>
+<div>
+  <mat-grid-list cols="4" rowHeight="1:1">
+    <mat-grid-tile [colspan]="3">
+      <app-game></app-game>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1">
+      <app-scorers></app-scorers>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

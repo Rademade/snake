@@ -1,0 +1,14 @@
+<div class="game-table">
+  <h1 *ngIf="!isStarted()">Press space to start</h1>
+  <div *ngIf="isStarted()">
+    <h2>Press space to stop</h2>
+    <span>Points: {{ points }}</span>
+  </div>
+
+  <div class="board">
+    <div *ngFor="let row of board.cells">
+      <div class="cell" [ngClass]="{'snake': cell.isSnake(), 'food': cell.isFood() }"  *ngFor="let cell of row">
+      </div>
+    </div>
+  </div>
+</div>

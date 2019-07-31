@@ -1,0 +1,19 @@
+.board {
+  font-size: 0;
+}
+
+.board .cell {
+  background: black;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  color: white;
+}
+
+.board .snake {
+  background: green;
+}
+
+.board .food {
+  background: red;
+}

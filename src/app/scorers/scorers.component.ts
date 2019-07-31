@@ -14,7 +14,7 @@ export class ScorersComponent implements OnInit {
   constructor(private db: AngularFirestore) { }
 
   ngOnInit() {
-    this.displayedColumns = ['name', 'score', 'createdAt'];
+    this.displayedColumns = ['name', 'score'];
     this.topPlayers$ =  this.db.collection<Player>('players', ref => ref.orderBy('score', 'desc').limit(10)).valueChanges();
   }
 

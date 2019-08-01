@@ -1,10 +1,11 @@
-<div>
-  <mat-grid-list cols="4" rowHeight="1:1">
-    <mat-grid-tile [colspan]="3">
+<div class="container">
+  <mat-grid-list cols="2">
+    <mat-grid-tile [colspan]="1">
       <app-game></app-game>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1">
-      <app-scorers></app-scorers>
+      <mat-grid-tile-header>Top 10 Players</mat-grid-tile-header>
+      <app-scorers class="scorers"></app-scorers>
     </mat-grid-tile>
   </mat-grid-list>
 </div>
